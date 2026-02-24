@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.ComponentModel;    
 using System.Text;
 
+//git获取测试
+
 namespace BD.Standard.KY.ReportServicePlugIn
 {
     [Kingdee.BOS.Util.HotUpdate]
