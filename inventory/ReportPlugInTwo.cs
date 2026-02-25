@@ -21,14 +21,14 @@ namespace BD.Standard.KY.ReportServicePlugIn
     {
         //当天入库的账龄按1天计算
         private int CurDateIsOne;
-        private string FIntervalTxt = "";
+        //private string FIntervalTxt = "";
         private string FQueryDate = "";
         //显示标题
-        private string F_UJED_StockOrg = "";
+        //private string F_UJED_StockOrg = "";
         private string F_UJED_MaterialRange = "全部";
         private string F_UJED_StockRange = "全部";
         private string F_UJED_LotRange = "全部";
-        private string F_UJED_StockOrgWhere = "";
+        //private string F_UJED_StockOrgWhere = "";
         private string F_UJED_MaterialWhere = "";
         private string F_UJED_StockWhere = "";
         private string F_UJED_LotWhere = "";

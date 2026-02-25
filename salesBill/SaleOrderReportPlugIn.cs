@@ -70,15 +70,15 @@ namespace BD.Standard.KY.ReportServicePlugIn
             this.ReportProperty.DecimalControlFieldList = list;
         }
 
+        
 
-
-        private string[] Field = { "orderfid", "Fbilltype", "fbillno", "fdate", "FSEQ", "Fnote", "FSUPPLIERID", "FSUPPLIERNumber", "FSUPPLIERName", "FMATERIALID", "FMATERIALNumber", "FMATERIALName", "fqty", "FTaxRate", "FPRICE", "FTAXPRICE", "FTAXPRICE2", "Fpricediff", "FbaseBillno", "FbaseSeq", "FbaseNote", "F_QCPR_PROJECT","FuserName", "fdeptname", "FREQUIRESTAFFID", "FUNITID", "FSETTLECURRID", "FLOCALCURRID", "FALLAMOUNT", "FALLAMOUNT_LC", "FAMOUNT", "FAMOUNT_LC", "Fmg1lFNAME",  "Fmg2lFNAME","Fmg3lFNAME", "FGIVEAWAY", "FPURCHASEORGName", "Fpayname", "FDOCUMENTSTATUS", "FCLOSESTATUS", "FMRPCLOSESTATUS", "Fproductline", "Fproductline1" };
+        private string[] Field = { "orderfid", "Fbilltype", "fbillno", "fdate", "FSEQ", "Fnote", "FCustId", "FCustIdNumber", "FCustIdName", "FMATERIALID", "FMATERIALNumber", "FMATERIALName", "fqty", "FTaxRate", "FPRICE", "FTAXPRICE", "FTAXPRICE2", "Fpricediff", "FbaseBillno", "FbaseSeq", "FbaseNote", "F_QCPR_PROJECT","FuserName", "fdeptname",  "FUNITID", "FSETTLECURRID", "FLOCALCURRID", "FALLAMOUNT", "FALLAMOUNT_LC", "FAMOUNT", "FAMOUNT_LC", "Fmg1lFNAME",  "Fmg2lFNAME","Fmg3lFNAME", "FGIVEAWAY", "FPURCHASEORGName", "Fpayname", "FDOCUMENTSTATUS", "FCLOSESTATUS", "FMRPCLOSESTATUS", "Fproductline", "Fproductline1" };
 
         
 
-        private string[] FieldType = { "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)","varchar(100)", "varchar(100)" };
+        private string[] FieldType = { "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)",  "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)","varchar(100)", "varchar(100)" };
 
-        private string[] Field1 = { "订单内码","采购类型", "单据编号", "订单日期","订单行号","明细备注","供应商内码", "供应商编码", "供应商名称", "物料内码", "物料编码", "物料名称", "采购数量", "税率%", "单价", "含税单价", "基准价(含税)", "含税单价差", "基准价单据编号", "基准价明细行号", "基准价明细备注","项目号","采购创建人","采购部门","需求人","采购单位", "结算币别内码", "本位币内码", "价税合计", "价税合计(本位币)", "金额", "金额(本位币)", "物料分组&小类", "物料分组&中类", "物料分组&大类", "是否赠品","采购组织","付款条件","单据状态","关闭状态","业务状态", "产品线内码", "基准价产品线内码" };
+        private string[] Field1 = { "订单内码","采购类型", "单据编号", "订单日期","订单行号","明细备注","客户内码", "客户编码", "客户名称", "物料内码", "物料编码", "物料名称", "采购数量", "税率%", "单价", "含税单价", "基准价(含税)", "含税单价差", "基准价单据编号", "基准价明细行号", "基准价明细备注","项目号","销售创建人","销售部门","销售单位", "结算币别内码", "本位币内码", "价税合计", "价税合计(本位币)", "金额", "金额(本位币)", "物料分组&小类", "物料分组&中类", "物料分组&大类", "是否赠品","销售组织","付款条件","单据状态","关闭状态","业务状态", "产品线内码", "基准价产品线内码" };
 
 
         #region 创建临时表
@@ -129,46 +129,46 @@ namespace BD.Standard.KY.ReportServicePlugIn
             }
             if (!string.IsNullOrWhiteSpace(F_UJED_OrgId))
             {
-                t1where.AppendLine($" and FPURCHASEORGID='{F_UJED_OrgId}' ");
-                t2where.AppendLine($" and FPURCHASEORGID='{F_UJED_OrgId}' ");
+                t1where.AppendLine($" and FSaleOrgId='{F_UJED_OrgId}' ");
+                t2where.AppendLine($" and FSaleOrgId='{F_UJED_OrgId}' ");
             }
             //基准价匹配是否包含供应商
-            string isSupplierBB1Where = Fissupplier ? "and a.FSUPPLIERID=BB1.FSUPPLIERID" : "";
-            string isSupplierCC1Where = Fissupplier ? "and a.FSUPPLIERID=CC1.FSUPPLIERID" : "";
+            string isSupplierBB1Where = Fissupplier ? "and a.FCustId=BB1.FCustId" : "";
+            string isSupplierCC1Where = Fissupplier ? "and a.FCustId=CC1.FCustId" : "";
 
 
             StringBuilder sql1 = new StringBuilder();
             #region BB1 小于基准时间表
             sql1.AppendLine($"/*dialect*/WITH  BB1 AS ( ");
-            sql1.AppendLine(" SELECT b.FMATERIALID, a.FSUPPLIERID, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE, ");
+            sql1.AppendLine(" SELECT b.FMATERIALID, a.FCustId, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE, ");
             sql1.AppendLine(" a.F_QCPR_Base Fproductline1,c.FTAXPRICE,  ");
-            sql1.AppendLine(" ROW_NUMBER() OVER(PARTITION BY b.FMATERIALID, a.FSUPPLIERID ORDER BY a.FDATE DESC, b.fentryid ASC ) AS RowNum ");
-            sql1.AppendLine(" FROM t_PUR_POOrder a ");
-            sql1.AppendLine(" INNER JOIN t_PUR_POOrderENTRY b ON a.fid = b.FID ");
-            sql1.AppendLine(" INNER JOIN t_PUR_POOrderENTRY_F c ON b.FENTRYID = c.FENTRYID ");
+            sql1.AppendLine(" ROW_NUMBER() OVER(PARTITION BY b.FMATERIALID, a.FCustId ORDER BY a.FDATE DESC, b.fentryid ASC ) AS RowNum ");
+            sql1.AppendLine(" FROM T_SAL_ORDER a ");
+            sql1.AppendLine(" INNER JOIN T_SAL_ORDERENTRY b ON a.fid = b.FID ");
+            sql1.AppendLine(" INNER JOIN T_SAL_ORDERENTRY_F c ON b.FENTRYID = c.FENTRYID ");
             sql1.AppendLine(" left join T_BD_MATERIAL m on m.FMATERIALID=b.FMATERIALID ");
-            sql1.AppendLine(" left join T_BD_SUPPLIER s on s.FSUPPLIERID=a.FSUPPLIERID ");
+            sql1.AppendLine(" left join T_BD_CUSTOMER s on s.FCustId=a.FCustId ");
             sql1.AppendLine($" WHERE a.FDATE < '{F_UJED_PriceDatetime}' {t2where} AND c.FTAXPRICE > 0 )");
 
             #endregion BB1 小于基准时间表
 
             #region CC1 大于基准时间表
             sql1.AppendLine($",CC1 AS ( ");
-            sql1.AppendLine(" SELECT b.FMATERIALID, a.FSUPPLIERID, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE, ");
+            sql1.AppendLine(" SELECT b.FMATERIALID, a.FCustId, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE, ");
             sql1.AppendLine(" a.F_QCPR_Base Fproductline1,c.FTAXPRICE,  ");
-            sql1.AppendLine(" ROW_NUMBER() OVER(PARTITION BY b.FMATERIALID, a.FSUPPLIERID ORDER BY a.FDATE, b.fentryid DESC ) AS RowNum ");
-            sql1.AppendLine(" FROM t_PUR_POOrder a ");
-            sql1.AppendLine(" INNER JOIN t_PUR_POOrderENTRY b ON a.fid = b.FID ");
-            sql1.AppendLine(" INNER JOIN t_PUR_POOrderENTRY_F c ON b.FENTRYID = c.FENTRYID ");
+            sql1.AppendLine(" ROW_NUMBER() OVER(PARTITION BY b.FMATERIALID, a.FCustId ORDER BY a.FDATE, b.fentryid DESC ) AS RowNum ");
+            sql1.AppendLine(" FROM T_SAL_ORDER a ");
+            sql1.AppendLine(" INNER JOIN T_SAL_ORDERENTRY b ON a.fid = b.FID ");
+            sql1.AppendLine(" INNER JOIN T_SAL_ORDERENTRY_F c ON b.FENTRYID = c.FENTRYID ");
             sql1.AppendLine(" left join T_BD_MATERIAL m on m.FMATERIALID=b.FMATERIALID ");
-            sql1.AppendLine(" left join T_BD_SUPPLIER s on s.FSUPPLIERID=a.FSUPPLIERID ");
+            sql1.AppendLine(" left join T_BD_CUSTOMER s on s.FCustId=a.FCustId ");
             sql1.AppendLine($" WHERE a.FDATE > '{F_UJED_PriceDatetime}' {t2where} AND c.FTAXPRICE > 0 )");
             #endregion CC1 大于基准时间表
 
             #region 主表
-            sql1.AppendLine(" SELECT  a.fid as orderfid,x.FNAME Fbilltype,a.fbillno,a.fdate,b.FSEQ,b.FNOTE,s.FSUPPLIERID, ");
-            sql1.AppendLine("  s.FNUMBER as FSUPPLIERNumber,sl.fname as FSUPPLIERName,m.FMATERIALID,m.fnumber as FMATERIALNumber,ml.FNAME as FMATERIALName, ");
-            sql1.AppendLine(" fqty,FTaxRate,FPRICE,c.FTAXPRICE, ");
+            sql1.AppendLine(" SELECT  a.fid as orderfid,x.FNAME Fbilltype,a.fbillno,a.fdate,b.FSEQ,b.FNOTE,s.FCustId, ");
+            sql1.AppendLine("  s.FNUMBER as FCustIdNumber,sl.fname as FCustIdName,m.FMATERIALID,m.fnumber as FMATERIALNumber,ml.FNAME as FMATERIALName, ");
+            sql1.AppendLine(" fqty,c.FTaxRate,FPRICE,c.FTAXPRICE, ");
             sql1.AppendLine(" COALESCE(BB1.FTAXPRICE, CC1.FTAXPRICE, c.FTAXPRICE) AS FTAXPRICE2, ");
             sql1.AppendLine(" c.FTAXPRICE-COALESCE(BB1.FTAXPRICE, CC1.FTAXPRICE, c.FTAXPRICE) Fpricediff, ");
             sql1.AppendLine(" COALESCE(BB1.FBILLNO, CC1.FBILLNO, '') FbaseBillno,COALESCE(CAST(BB1.FSEQ AS VARCHAR(10)), ");
@@ -176,34 +176,34 @@ namespace BD.Standard.KY.ReportServicePlugIn
             sql1.AppendLine(" COALESCE(BB1.Fproductline1, CC1.Fproductline1, '') Fproductline1, ");
             sql1.AppendLine(" a.F_QCPR_Base Fproductline, ");
             sql1.AppendLine(" a.F_QCPR_PROJECT, ");
-            sql1.AppendLine(" u.Fname FuserName,isnull(d.FNAME,'') fdeptname,FREQUIRESTAFFID,FUNITID,FSETTLECURRID,FLOCALCURRID,FALLAMOUNT,FALLAMOUNT_LC,FAMOUNT,FAMOUNT_LC, ");
+            sql1.AppendLine(" u.Fname FuserName,isnull(d.FNAME,'') fdeptname,FUNITID,FSETTLECURRID,FLOCALCURRID,FALLAMOUNT,FALLAMOUNT_LC,FAMOUNT,FAMOUNT_LC, ");
             sql1.AppendLine(" isnull(mg1l.FNAME,'') Fmg1lFNAME,isnull(mg2l.FNAME,'') Fmg2lFNAME,isnull(mg3l.FNAME,'') Fmg3lFNAME, ");
-            sql1.AppendLine(" case when FGIVEAWAY=1 then '是' else '否' end  FGIVEAWAY, ");
+            sql1.AppendLine(" case when FIsFree=1 then '是' else '否' end  FGIVEAWAY, ");
             sql1.AppendLine(" ol.FNAME FPURCHASEORGName, ");
             sql1.AppendLine(" isnull(pay.FNAME,'') Fpayname, ");
             sql1.AppendLine(" fol.FCAPTION FDOCUMENTSTATUS, ");
             sql1.AppendLine(" case when FCLOSESTATUS='A' THEN '未关闭' else'已关闭' end FCLOSESTATUS, ");
             sql1.AppendLine(" case when FMRPCLOSESTATUS='A' THEN '正常' else'业务关闭' end FMRPCLOSESTATUS ");
             //sql1.AppendLine("  ");
-            sql1.AppendLine(" from t_PUR_POOrder a  inner join T_PUR_POORDERFIN F on a.fid=F.FID ");
-            sql1.AppendLine(" inner join T_PUR_POORDERENTRY b on a.fid=b.FID ");
-            sql1.AppendLine(" inner join T_PUR_POORDERENTRY_F c on b.FENTRYID=c.FENTRYID ");
-            sql1.AppendLine(" inner join T_PUR_POORDERENTRY_D c1 on b.FENTRYID=c1.FENTRYID ");
-            sql1.AppendLine(" left join T_BD_SUPPLIER s on s.FSUPPLIERID=a.FSUPPLIERID ");
-            sql1.AppendLine(" left join T_BD_SUPPLIER_L sl on s.FSUPPLIERID=sl.FSUPPLIERID   and sl.FLOCALEID=2052 ");
+            sql1.AppendLine(" from T_SAL_ORDER a  inner join T_SAL_ORDERFIN F on a.fid=F.FID ");
+            sql1.AppendLine(" inner join T_SAL_ORDERENTRY b on a.fid=b.FID ");
+            sql1.AppendLine(" inner join T_SAL_ORDERENTRY_F c on b.FENTRYID=c.FENTRYID ");
+            sql1.AppendLine(" inner join T_SAL_ORDERENTRY_D c1 on b.FENTRYID=c1.FENTRYID ");
+            sql1.AppendLine(" left join T_BD_CUSTOMER s on s.FCustId=a.FCustId ");
+            sql1.AppendLine(" left join T_BD_CUSTOMER_L sl on s.FCustId=sl.FCustId   and sl.FLOCALEID=2052 ");
             sql1.AppendLine(" left join T_BD_MATERIAL m on m.FMATERIALID=b.FMATERIALID ");
             sql1.AppendLine(" left join T_BD_MATERIAL_L ml on m.FMATERIALID=ml.FMATERIALID   and ml.FLOCALEID=2052 ");
-            sql1.AppendLine(" left join T_ORG_ORGANIZATIONS o on o.FORGID= a.FPURCHASEORGID ");
+            sql1.AppendLine(" left join T_ORG_ORGANIZATIONS o on o.FORGID= a.FSaleOrgId ");
             sql1.AppendLine(" left join T_ORG_ORGANIZATIONS_L ol on o.FORGID= ol.FORGID    and ol.FLOCALEID=2052   ");
             sql1.AppendLine(" left join T_BAS_BILLTYPE_L x on x.FBILLTYPEID= a.FBILLTYPEID ");
             sql1.AppendLine(" left join T_SEC_USER u on u.FUSERID=a.FCREATORID ");
-            sql1.AppendLine(" left join T_BD_DEPARTMENT_L d on d.FDEPTID=FPURCHASEDEPTID ");
+            sql1.AppendLine(" left join T_BD_DEPARTMENT_L d on d.FDEPTID=FSaleDeptId ");
             sql1.AppendLine(" left join T_BD_MATERIALGROUP mg1 on mg1.FID=m.FMATERIALGROUP left join T_BD_MATERIALGROUP_L mg1l on mg1l.FID=mg1.fid ");
             sql1.AppendLine(" left join T_BD_MATERIALGROUP mg2 on mg2.FID=mg1.FPARENTID left join T_BD_MATERIALGROUP_L mg2l on mg2l.FID=mg2.fid ");
             sql1.AppendLine(" left join T_BD_MATERIALGROUP mg3 on mg3.FID=mg2.FPARENTID left join T_BD_MATERIALGROUP_L mg3l on mg3l.FID=mg3.fid ");
             sql1.AppendLine($" LEFT JOIN (select* from  BB1 where RowNum= 1) BB1 ON b.FMATERIALID = BB1.FMATERIALID {isSupplierBB1Where} ");
             sql1.AppendLine($" LEFT JOIN (select* from  CC1 where RowNum= 1) CC1 ON b.FMATERIALID = CC1.FMATERIALID {isSupplierCC1Where} ");
-            sql1.AppendLine(" left join T_BD_PAYMENTCONDITION_L pay on pay.FID=f.FPAYCONDITIONID ");
+            sql1.AppendLine(" left join T_BD_RecCondition_L pay on pay.FID=f.FRecConditionId ");
             sql1.AppendLine(" left join T_META_FORMENUMITEM fo on  fo.fid='14039efd-6350-4eab-b482-c1c6bcdf914b' and fo.FVALUE= a.FDOCUMENTSTATUS ");
             sql1.AppendLine(" left join T_META_FORMENUMITEM_L fol on fo.FENUMID=fol.FENUMID  ");
             //sql1.AppendLine("  ");

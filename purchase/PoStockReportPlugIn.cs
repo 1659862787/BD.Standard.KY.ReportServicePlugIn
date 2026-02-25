@@ -49,7 +49,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
         "FMATERIALNumber", "FMATERIALName", "FREALQTY", "FTaxRate", "FPRICE", "FTAXPRICE", "FTAXPRICE2", "FTAXPRICE3", "FTAXPRICE4", "Fpricediff",
         "FbaseBillno", "FbaseSeq", "FbaseNote", "FuserName", "fdeptname", "FUNITID", "FSETTLECURRID", "FLOCALCURRID", "FALLAMOUNT", "FALLAMOUNT_LC",
         "FAMOUNT", "FAMOUNT_LC", "Fmg1lFNAME", "Fmg2lFNAME", "Fmg3lFNAME", "FGIVEAWAY", "FPURCHASEORGName", "Fpayname", "FDOCUMENTSTATUS", "fbillnoZG",
-        "fseqZG", "FCommentZG", "fbillnoCW", "fseqCW", "FCommentCW", "FREQUIRESTAFFID", "F_QCPR_PROJECT", "Fproductline"
+        "fseqZG", "FCommentZG", "fbillnoCW", "fseqCW", "FCommentCW", "FREQUIRESTAFFID", "F_QCPR_PROJECT", "Fproductline","FPOOrderNo","FbasePOOrderNo"
         };
 
         private string[] FieldType =
@@ -58,7 +58,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
         "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)",
         "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)",
         "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)",
-        "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)"
+        "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)"
         };
 
         private string[] Field1 =
@@ -67,7 +67,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
         "物料编码", "物料名称", "采购数量", "税率%", "单价", "含税单价", "基准价(含税)", "暂估应付(含税)", "财务应付(含税)", "含税单价差",
         "基准价单据编号", "基准价明细行号", "基准价明细备注", "采购创建人", "采购部门", "采购单位", "结算币别内码", "本位币内码", "价税合计", "价税合计(本位币)",
         "金额", "金额(本位币)", "物料分组&小类", "物料分组&中类", "物料分组&大类", "是否赠品", "采购组织", "付款条件", "单据状态", "暂估单据编号",
-        "暂估明细行号", "暂估明细备注", "财务单据编号", "财务明细行号", "财务明细备注", "需求人内码", "项目号内码","产品线内码"
+        "暂估明细行号", "暂估明细备注", "财务单据编号", "财务明细行号", "财务明细备注", "需求人内码", "项目号内码","产品线内码","采购订单号","基准价采购订单号"
         };
 
 
@@ -165,7 +165,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
 
             #region BB1 小于基准时间表
             stringBuilder3.AppendLine("/*dialect*/WITH  BB1 AS ( ");
-            stringBuilder3.AppendLine(" SELECT b.FMATERIALID, a.FSUPPLIERID, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE, ");
+            stringBuilder3.AppendLine(" SELECT b.FMATERIALID, a.FSUPPLIERID, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE,b.FPOOrderNo, ");
             stringBuilder3.AppendLine(" c.FTAXPRICE, pe.FTAXPRICE FTAXPRICEZG, pce.FTAXPRICE FTAXPRICECW, ");
             stringBuilder3.AppendLine(" p.FBILLNO fbillnoZG, pe.FSEQ fseqZG, pe.FComment FCommentZG, ");
             stringBuilder3.AppendLine(" pC.FBILLNO fbillnoCW, pce.FSEQ fseqCW, pce.FComment FCommentCW, ");
@@ -186,7 +186,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
 
             #region CC1 大于基准时间表
             stringBuilder3.AppendLine(", CC1 AS ( ");
-            stringBuilder3.AppendLine(" SELECT b.FMATERIALID, a.FSUPPLIERID, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE, ");
+            stringBuilder3.AppendLine(" SELECT b.FMATERIALID, a.FSUPPLIERID, a.FDATE, b.fentryid, a.FBILLNO, b.FSEQ, b.FNOTE,b.FPOOrderNo, ");
             stringBuilder3.AppendLine(" c.FTAXPRICE, pe.FTAXPRICE FTAXPRICEZG, pce.FTAXPRICE FTAXPRICECW, ");
             stringBuilder3.AppendLine(" p.FBILLNO fbillnoZG, pe.FSEQ fseqZG, pe.FComment FCommentZG, ");
             stringBuilder3.AppendLine(" pC.FBILLNO fbillnoCW, pce.FSEQ fseqCW, pce.FComment FCommentCW, ");
@@ -229,7 +229,8 @@ namespace BD.Standard.KY.ReportServicePlugIn
             stringBuilder3.AppendLine(" COALESCE(CAST(BB1.fseqZG AS VARCHAR(10)),CAST(CC1.fseqZG AS VARCHAR(10)), '') fseqZG, ");
             stringBuilder3.AppendLine(" COALESCE(BB1.fbillnoCW, CC1.fbillnoCW, '') fbillnoCW, ");
             stringBuilder3.AppendLine(" COALESCE(BB1.FCommentCW, CC1.FCommentCW, '') FCommentCW, ");
-            stringBuilder3.AppendLine(" COALESCE(CAST(BB1.fseqCW AS VARCHAR(10)),CAST(CC1.fseqCW AS VARCHAR(10)), '') fseqCW ");
+            stringBuilder3.AppendLine(" COALESCE(CAST(BB1.fseqCW AS VARCHAR(10)),CAST(CC1.fseqCW AS VARCHAR(10)), '') fseqCW, ");
+            stringBuilder3.AppendLine(" COALESCE(BB1.FPOOrderNo, CC1.FPOOrderNo, '') FbasePOOrderNo,b.FPOOrderNo ");
             stringBuilder3.AppendLine(" ,a.F_QCPR_Base Fproductline ");
             stringBuilder3.AppendLine(" from t_STK_InStock a  inner join T_PUR_POORDERFIN F on a.fid=F.FID ");
             stringBuilder3.AppendLine(" inner join t_STK_InStockENTRY b on a.fid=b.FID ");
