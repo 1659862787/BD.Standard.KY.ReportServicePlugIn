@@ -80,7 +80,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
 
         private string[] FieldType = { "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(max)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)",  "varchar(100)", "varchar(100)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "decimal(18,8)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)", "varchar(100)","varchar(100)", "varchar(100)" };
 
-        private string[] Field1 = { "订单内码","采购类型", "单据编号", "订单日期","订单行号","明细备注","客户内码", "客户编码", "客户名称", "物料内码", "物料编码", "物料名称", "采购数量", "税率%", "单价", "含税单价", "基准价(含税)", "含税单价差", "基准价单据编号", "基准价明细行号", "基准价明细备注","项目号","销售创建人","销售部门","销售单位", "结算币别内码", "本位币内码", "价税合计", "价税合计(本位币)", "金额", "金额(本位币)", "物料分组&小类", "物料分组&中类", "物料分组&大类", "是否赠品","销售组织","付款条件","单据状态","关闭状态","业务状态", "产品线内码", "基准价产品线内码" };
+        private string[] Field1 = { "订单内码","销售类型", "单据编号", "订单日期","订单行号","明细备注","客户内码", "客户编码", "客户名称", "物料内码", "物料编码", "物料名称", "销售数量", "税率%", "单价", "含税单价", "基准价(含税)", "含税单价差", "基准价单据编号", "基准价明细行号", "基准价明细备注","项目号","销售创建人","销售部门","销售单位", "结算币别内码", "本位币内码", "价税合计", "价税合计(本位币)", "金额", "金额(本位币)", "物料分组&小类", "物料分组&中类", "物料分组&大类", "是否赠品","销售组织","付款条件","单据状态","关闭状态","业务状态", "产品线内码", "基准价产品线内码" };
 
 
         #region 创建临时表
@@ -197,7 +197,7 @@ namespace BD.Standard.KY.ReportServicePlugIn
             sql1.AppendLine(" left join T_BD_MATERIAL_L ml on m.FMATERIALID=ml.FMATERIALID   and ml.FLOCALEID=2052 ");
             sql1.AppendLine(" left join T_ORG_ORGANIZATIONS o on o.FORGID= a.FSaleOrgId ");
             sql1.AppendLine(" left join T_ORG_ORGANIZATIONS_L ol on o.FORGID= ol.FORGID    and ol.FLOCALEID=2052   ");
-            sql1.AppendLine(" left join T_BAS_BILLTYPE_L x on x.FBILLTYPEID= a.FBILLTYPEID ");
+            sql1.AppendLine(" left join T_BAS_BILLTYPE_L x on x.FBILLTYPEID= a.FBILLTYPEID  and x.FLOCALEID=2052");
             sql1.AppendLine(" left join T_SEC_USER u on u.FUSERID=a.FCREATORID ");
             sql1.AppendLine(" left join T_BD_DEPARTMENT_L d on d.FDEPTID=FSaleDeptId ");
             sql1.AppendLine(" left join T_BD_MATERIALGROUP mg1 on mg1.FID=m.FMATERIALGROUP left join T_BD_MATERIALGROUP_L mg1l on mg1l.FID=mg1.fid ");
